@@ -8,6 +8,21 @@ var knex = require('knex')({
 });
 var db = require('bookshelf')(knex);
 
+/*
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+
+var urlsSchema = new Schema({
+  url: String,
+  baseUrl: String,
+  code: String,
+  title: String,
+  visits: Number,
+  timestamps: { type: Date, default: Date.now }
+});
+
+*/
+
 db.knex.schema.hasTable('urls').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('urls', function (link) {
@@ -23,6 +38,14 @@ db.knex.schema.hasTable('urls').then(function(exists) {
     });
   }
 });
+
+/*
+var usersSchema = new Schema({
+  username: String,
+  password: String,
+  timestamps: { type: Date, default: Date.now }
+});
+*/
 
 db.knex.schema.hasTable('users').then(function(exists) {
   if (!exists) {
