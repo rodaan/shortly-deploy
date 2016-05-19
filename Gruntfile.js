@@ -8,7 +8,13 @@ module.exports = function(grunt) {
         separator: ';',
       },
       dist: {
-        src: ['public/client/app.js', 'public/client/createLinkView.js', 'public/client/link.js', 'public/client/links.js', 'public/client/linksView.js', 'public/client/linkView.js', 'public/client/router.js'],
+        src: ['public/client/app.js',
+        'public/client/createLinkView.js',
+        'public/client/link.js', 
+        'public/client/links.js', 
+        'public/client/linksView.js', 
+        'public/client/linkView.js', 
+        'public/client/router.js'],
         dest: 'public/dist/client.js'
       },
 
@@ -39,7 +45,14 @@ module.exports = function(grunt) {
 
     eslint: {
       target: [
-        'public/dist/client.js', 'server.js', 'server-config.js', 'app/collections/links.js', 'app/collections/users.js', 'app/models/link.js', 'app/models/user.js', 'app/config.js', 'lib/request-handler.js', 'lib/utility.js'
+        'public/dist/client.js', 
+        'server.js', 
+        'server-config.js', 
+        'app/models/link.js', 
+        'app/models/user.js', 
+        'app/config.js', 
+        'lib/request-handler.js', 
+        'lib/utility.js'
       ]
     },
 
