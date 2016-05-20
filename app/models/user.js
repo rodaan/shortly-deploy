@@ -13,19 +13,15 @@ var User = mongoose.model('User', db.usersSchema);
 // };
 
 User.comparePassword = function(attemptedPassword, password, callback) {
-  console.log('attempted password is:', attemptedPassword);
-  console.log('password is:', password);
   bcrypt.compare(attemptedPassword, password, function(err, isMatch) {
     callback(isMatch);
   });
 };
 
 User.hashPassword = function(password) {
-  console.log('3');
   var cipher = Promise.promisify(bcrypt.hash);
   cipher(password, null, null).bind(this)
     .then(function(hash) {
-      console.log('password is now:', hash);
       return hash;
     });
 };

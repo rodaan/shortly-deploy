@@ -104,6 +104,8 @@ describe('', function() {
       });
 
       it('Returns the same shortened code if attempted to add the same URL twice', function(done) {
+        console.log('test link is:', link);
+
         var firstCode = link.code;
         request(app)
           .post('/links')
@@ -111,6 +113,7 @@ describe('', function() {
             'url': 'http://www.roflzoo.com/'})
           .expect(200)
           .expect(function(res) {
+            console.log('res is:', res.body);
             var secondCode = res.body.code;
             expect(secondCode).to.equal(firstCode);
           })
@@ -118,6 +121,7 @@ describe('', function() {
       });
 
       it('Shortcode redirects to correct url', function(done) {
+        console.log('code is', link.code);
         var sha = link.code;
         request(app)
           .get('/' + sha)

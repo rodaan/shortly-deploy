@@ -1,7 +1,9 @@
 var path = require('path');
-
+var crypto = require('crypto');
+var bcrypt = require('bcrypt-nodejs');
+var Promise = require('bluebird');
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017');
+mongoose.connect('mongodb://localhost:27017/shortly');
 
 exports.db = mongoose.connection;
 exports.db.on('error', console.error.bind(console, 'le connection error'));
@@ -12,7 +14,7 @@ exports.db.once('open', function() {
 
 var Schema = mongoose.Schema;
 
-exports.urlsSchema = new Schema({
+var urlsSchema = new Schema({
   url: String,
   baseUrl: String,
   code: String,
@@ -21,16 +23,36 @@ exports.urlsSchema = new Schema({
   timestamps: { type: Date, default: Date.now }
 });
 
+urlsSchema.pre('save', function(next) {
+  var shasum = crypto.createHash('sha1');
+  shasum.update(this.url);
+  this.code = shasum.digest('hex').slice(0, 5);
+  console.log('init got run', this.code);
+  next();
+});
 
-exports.usersSchema = new Schema({
+exports.urlsSchema = urlsSchema;
+
+var usersSchema = new Schema({
   username: String,
   password: String,
   timestamps: { type: Date, default: Date.now }
 });
 
+usersSchema.pre('save', function(next) {
+  var cipher = Promise.promisify(bcrypt.hash);
+  return cipher(this.password, null, null).bind(this)
+    .then(function(hash) {
+      this.password = hash;
+      next();
+    });
+});
 
+exports.usersSchema = usersSchema;
 
-// module.exports = db;
+// usersSchema.post('init', function(){
+
+// })
 
 // var knex = require('knex')({
 //   client: 'sqlite3',
