@@ -12,6 +12,13 @@ var mongoose = require('mongoose');
 
 var Link = mongoose.model('Link', db.urlsSchema);
 
+Link.createBitly = function(model, attrs, options) {
+  var shasum = crypto.createHash('sha1');
+  shasum.update(model.url);
+  model.code = shasum.digest('hex').slice(0, 5);
+};
+
+
 
 module.exports = Link;
 

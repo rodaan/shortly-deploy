@@ -28,6 +28,8 @@ exports.usersSchema = new Schema({
   timestamps: { type: Date, default: Date.now }
 });
 
+
+
 // module.exports = db;
 
 // var knex = require('knex')({
