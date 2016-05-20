@@ -14,7 +14,12 @@ var User = mongoose.model('User', db.usersSchema);
 
 User.comparePassword = function(attemptedPassword, password, callback) {
   bcrypt.compare(attemptedPassword, password, function(err, isMatch) {
-    callback(isMatch);
+    console.log('the ISMATCH=================', isMatch);
+    if (err) {
+      console.log('bcrypterror=========', err);
+    } else {  
+      callback(isMatch);
+    }
   });
 };
 
